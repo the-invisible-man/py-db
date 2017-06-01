@@ -29,7 +29,7 @@ Due to limitations in most free csv data generators, the data repeats after 1000
 
 ## Benchmark
 
-By default the database has a maximum node size of 1000, the larger the node size, the shorter the startup time but the longer the search time. With a 1000 max document size the startup will be around 9 seconds and the search will take around 1 second.
+By default the database has a maximum node size of 1000, the larger the node size, the shorter the startup time but the longer the search time. With a 1000 max document size the startup will be around 6-9 seconds on a modern CPU and the search will take around 1 second.
 
 ## Indexing
 

@@ -2,7 +2,7 @@
 
 A simple script for loading a csv file and searching through it. It  takes an approach similar to that of popular document search engines, the data is broken up into smaller documents (nodes) and the indexes are tracked by the node identifier and the line number. The engine comes with a sample data file with 1.2 million records.
 
-*Alternate Technique:* If we didn't want to have the in memory indexes we would have to sort the data by the last_name column, then split it, then write it. For searching we could then use binary search concurrently on every node.
+*Alternate Technique:* (Not implemented in this repo) If we didn't want to have the in memory indexes we would have to sort the data by the last_name column, then split it, then write it. For searching we could then use binary search concurrently on every node, then take note of the node and line number and use the in memory indexing strategy for caching the results.
 
 ## Requirements
 Python 3.0 ^

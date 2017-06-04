@@ -2,7 +2,7 @@
 
 A simple script for loading a csv file and searching through it. It  takes an approach similar to that of popular document search engines, the data is broken up into smaller documents (nodes) and the indexes are tracked by the node identifier and the line number. The engine comes with a sample data file with 1.2 million records.
 
-*Alternate Technique:* If we didn't want to have the in memory indexes we would have to sort the data by the last_name column, then split it, then write it. For searching we could then use binary search concurrently on every node.
+*Alternate Technique:* (Not implemented in this repo) If we didn't want to have the in memory indexes of all the data we would have to sort the data by the last_name column, then split it, then write it. For searching we could then use binary search concurrently on every node, then take note of the node and line number and use the in memory indexing strategy for caching the results.
 
 ## Requirements
 Python 3.0 ^
@@ -29,7 +29,7 @@ Due to limitations in most free csv data generators, the data repeats after 1000
 
 ## Benchmark
 
-By default the database has a maximum node size of 1000, the larger the node size, the shorter the startup time but the longer the search time. With a 1000 max document size the startup will be around 9 seconds and the search will take around 1 second.
+By default the database has a maximum node size of 1000, the larger the node size, the shorter the startup time but the longer the search time. With a 1000 max document size the startup will be around 6-9 seconds on a modern CPU and the search will take around 1 second.
 
 ## Indexing
 

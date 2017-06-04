@@ -16,8 +16,7 @@ print('Started up in ' + str(t_secs() - start_up_t) + ' seconds')
 print('Loaded ' + str(c.total_records) + ' records')
 
 while True:
-    # key = input('Enter search term:')
-    key = 'john'
+    key = input('Enter search term:')
     s_time = t_secs()
     c.search_print(key)
     e_time = t_secs() - s_time

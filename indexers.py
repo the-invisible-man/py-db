@@ -38,6 +38,7 @@ class TreeIndexer:
         def __init__(self):
             self.storage = dict()
             self.indexes = list()
+            self.ending_indices = list()
 
         def add(self, word, index):
 
@@ -49,6 +50,8 @@ class TreeIndexer:
             if len(word) > 1:
                 return self.child(word[0]).add(word[1:], index)
             else:
+                # Keep track of indexes for words that end here
+                self.ending_indices.append(len(self.indexes) - 1)
                 return True
 
         def has(self, letter):
@@ -57,8 +60,12 @@ class TreeIndexer:
         def child(self, letter):
             return self.storage[letter]
 
-        def fetch_indexes(self):
-            return self.indexes
+        def fetch_indexes(self, continuous=True):
+            if continuous is True:
+                return self.indexes
+
+            # This is so we can do exact matching
+            return [self.indexes[i] for i in self.ending_indices]
 
     STYLE_EXACT = 1
     STYLE_PARTIAL = 0
@@ -86,7 +93,7 @@ class TreeIndexer:
                 return p.fetch_indexes()
 
         if style == self.STYLE_EXACT and steps == (len(o) - 1):
-                return p.fetch_indexes()
+                return p.fetch_indexes(continuous=False)
 
         return list()
 

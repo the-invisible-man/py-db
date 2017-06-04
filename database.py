@@ -23,10 +23,11 @@ def wrapper(func, *args, **kwargs):
 
 class Cluster:
 
-    def __init__(self, storage_location, load_file, index_col):
+    def __init__(self, storage_location, load_file, index_col, indexer):
 
         self.MAX_NODE_SIZE = 1000
         self.MAX_PROCESS_POOL_SIZE = 10
+        self.indexer = indexer
         self.storage = self.validate_storage(storage_location)
         self.file_location = self.validate_path(load_file)
         self.HashMap = dict()
@@ -65,9 +66,10 @@ class Cluster:
                     line = 0
                     node = self.init_node(node_counter)
 
-                # Call track() to create an in memory index that points to
-                # the current node and line number.
-                self.track(row[self.index_pos], node_counter, line)
+                # Remove non alphanumeric characters and index the data
+                i = Index(node=node_counter, line=line)
+                s = self.norm(row[self.index_pos])
+                self.indexer.index(s, i)
 
                 # Write to database storage as raw text
                 node.write(','.join(row) + '\n')
@@ -82,19 +84,6 @@ class Cluster:
             raise "CSV is invalid (File does not exist or is not a csv file): " + path
 
         return path
-
-    def track(self, key, node, line):
-        # Remove non alpha numeric characters and lowercase
-
-        key = self.norm(key)
-        # The Index tuple will help us track the
-        i = Index(node=node, line=line)
-
-        if key not in self.HashMap:
-            self.HashMap[key] = list()
-
-        # Add Index object to bucket
-        self.HashMap[key].append(i)
 
     def norm(self, key):
         return re.sub('[^a-zA-Z0-9]', '', key).lower()
@@ -112,14 +101,12 @@ class Cluster:
         key = self.norm(key)
 
         # Because we are looking for exact matches we just check if the key exists in our dictionary
-        if key in self.HashMap:
+        indexes = self.indexer.search(key)
 
-            indexes = self.HashMap[key]
-
-            for i in indexes:
-                # Yielding results in less waiting, we daisy chain the parent function so that it can build the result
-                # table at the same rate as the results come in.
-                yield self.fetch(i)
+        for i in indexes:
+            # Yielding results in less waiting, we daisy chain the parent function so that it can build the result
+            # table at the same rate as the results come in.
+            yield self.fetch(i)
 
     def validate_storage(self, storage):
 

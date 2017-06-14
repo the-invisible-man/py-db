@@ -41,7 +41,7 @@ On startup the engine loads the csv file with the mock data. Using the last_name
 ![alt text](https://raw.githubusercontent.com/the-invisible-man/python-search/master/assets/indexing.png "Indexing")
 
 ### TreeIndexer
-The tree indexer implements are similar concept to the HashTableIndexer in that it keeps track of the node and line number where the data can be found, but the data structure is much more different. As of this moment the py-db engine is able to do partial matching on the start of the string. This allows us to add the `%` operator to command the search to do a partial search. In practice this would allows us to store the lastnames "John" and "Johnson", search with the string `john%` and receive both lastnames. This is achieved with the help of a [Trie](https://en.wikipedia.org/wiki/Trie) data structure. The following image illustrates how lastnames are index for partial matching.
+The tree indexer implements are similar concept to the HashTableIndexer in that it keeps track of the node and line number where the data can be found, but the data structure is much more different. As of this moment the py-db engine is able to do partial matching on the start of the string. This allows us to add the `%` operator to command the search to do a partial search. In practice this would allows us to store the lastnames "John" and "Johnson", search with the string `john%` and receive both lastnames. This is achieved with the help of a [Trie](https://en.wikipedia.org/wiki/Trie) data structure. The following image illustrates how lastnames are indexed for partial matching.
 
 ![alt text](https://raw.githubusercontent.com/the-invisible-man/py-db/master/assets/trie.png "Trie")
 

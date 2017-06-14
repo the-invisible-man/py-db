@@ -1,7 +1,20 @@
 # Indexing engines
+import inspect
 
 
-class HashTableIndexer:
+class IndexingEngine:
+
+    def index(self, key, index):
+        self._err(inspect.stack()[0][3])
+
+    def search(self, key):
+        self._err(inspect.stack()[0][3])
+
+    def _err(self, f):
+        raise Exception("You must implement " + f + " in your indexer class.")
+
+
+class HashTableIndexer(IndexingEngine):
 
     """
     This one is only good for exact matches
@@ -27,7 +40,7 @@ class HashTableIndexer:
         return list()
 
 
-class TreeIndexer:
+class TreeIndexer(IndexingEngine):
 
     """
     Good for partial matching
@@ -87,7 +100,7 @@ class TreeIndexer:
             p = p.child(l)
             word = word[1:]
             steps += 1
- 
+
             if len(word) > 1:
                 l = word[0]
             else:

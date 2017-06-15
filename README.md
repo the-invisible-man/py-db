@@ -1,6 +1,6 @@
 # Search Store
 
-A simple script for loading a csv file and searching through it. It  takes an approach similar to that of popular document search engines, the data is broken up into smaller documents (nodes) and the indexes are tracked by the node identifier and the line number. The engine comes with a sample data file with 1.2 million records.
+A simple script for loading a csv file and indexing one of the columns for searching. It  takes an approach similar to that of popular document search engines, the data is broken up into smaller documents (nodes) and the indexes are tracked by the node identifier and the line number. The engine comes with a sample data file with 1.2 million records. In this repo you will find a dataset of user information: `id`, `first_name`, `last_name`, `email`, `gender`, `gender`, `ip_address`. We will be indexing the `last_name` column.
 
 *Alternate Technique:* (Not implemented in this repo) If we didn't want to have the in memory indexes of all the data we would have to sort the data by the last_name column, then split it, then write it. For searching we could then use binary search concurrently on every node, then take note of the node and line number and use the in memory indexing strategy for caching the results.
 
